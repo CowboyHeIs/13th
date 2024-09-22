@@ -4,7 +4,7 @@ from main.models import MoodEntry
 from django.http import HttpResponse
 from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 def show_xml(request):
@@ -68,3 +68,7 @@ def login_user(request):
       form = AuthenticationForm(request)
    context = {'form': form}
    return render(request, 'login.html', context)
+
+def logout_user(request):
+    logout(request)
+    return redirect('main:login')

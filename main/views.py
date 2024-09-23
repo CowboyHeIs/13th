@@ -26,7 +26,7 @@ def show_json(request):
 
 @login_required(login_url='/login')
 def show_main(request):
-    MoodEntry.objects.filter(user=request.user)
+    mood_entries = MoodEntry.objects.filter(user=request.user)
 
 
     context = {

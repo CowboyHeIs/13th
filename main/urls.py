@@ -8,7 +8,7 @@ urlpatterns = [
     path('create-mood-entry', create_mood_entry, name='create_mood_entry'),
     path('xml/', show_xml, name='show_xml'),
     path('json/', show_json, name='show_json'),
-    path('register/', register, name='ragister'),
+    path('register/', register, name='register'),
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
 ]

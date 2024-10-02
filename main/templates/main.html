@@ -79,6 +79,18 @@
   </div>
 </div>
 <script>
+  function addMoodEntry() {
+    fetch("{% url 'main:add_mood_entry_ajax' %}", {
+      method: "POST",
+      body: new FormData(document.querySelector('#moodEntryForm')),
+    })
+    .then(response => refreshMoodEntries())
+
+    document.getElementById("moodEntryForm").reset(); 
+    document.querySelector("[data-modal-toggle='crudModal']").click();
+
+    return false;
+  }
   const modal = document.getElementById('crudModal');
   const modalContent = document.getElementById('crudModalContent');
 
@@ -183,5 +195,6 @@
     document.getElementById("mood_entry_cards").innerHTML = htmlString;
 }
 refreshMoodEntries();
+document.getElementById("submitMoodEntry").onclick = addMoodEntry
 </script>
 {% endblock content %}

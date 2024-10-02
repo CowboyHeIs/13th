@@ -86,8 +86,8 @@ def delete_mood(request, id):
 @csrf_exempt
 @require_POST
 def add_mood_entry_ajax(request):
-    mood = request.POST.get("mood")
-    feelings = request.POST.get("feelings")
+    mood = strip_tags(request.POST.get("mood"))
+    feelings = strip_tags(request.POST.get("feelings"))
     mood_intensity = request.POST.get("mood_intensity")
     user = request.user
 

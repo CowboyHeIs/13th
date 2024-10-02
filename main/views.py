@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 import datetime
 
 ##################################
@@ -89,6 +91,23 @@ def delete_mood(request, id):
     mood.delete()
     # Return to home page
     return HttpResponseRedirect(reverse('main:show_main'))
+
+@csrf_exempt
+@require_POST
+def add_mood_entry_ajax(request):
+    mood = request.POST.get("mood")
+    feelings = request.POST.get("feelings")
+    mood_intensity = request.POST.get("mood_intensity")
+    user = request.user
+
+    new_mood = MoodEntry(
+        mood=mood, feelings=feelings,
+        mood_intensity=mood_intensity,
+        user=user
+    )
+    new_mood.save()
+
+    return HttpResponse(b"CREATED", status=201)
 ##################################
 
 

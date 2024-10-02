@@ -16,17 +16,11 @@ import datetime
 'XML and JSON'
 ##################################
 def show_xml(request):
-    data = MoodEntry.objects.all()
-
-def show_xml(request):
-    data = MoodEntry.objects.all()
+    data = MoodEntry.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 def show_json(request):
-    data = MoodEntry.objects.all()
-
-def show_json(request):
-    data = MoodEntry.objects.all()
+    data = MoodEntry.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 ##################################
 
@@ -35,14 +29,11 @@ def show_json(request):
 ##################################
 @login_required(login_url='/login')
 def show_main(request):
-    mood_entries = MoodEntry.objects.filter(user=request.user)
-
 
     context = {
         'name': request.user.username,
         'class': 'PBP KKI',
         'npm': '2306256356',
-        'mood_entries': mood_entries,
         'last_login' : request.COOKIES.get('last_login')
     }
 

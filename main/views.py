@@ -57,10 +57,14 @@ def edit_mood(request, id):
     # Set mood entry as an instance of the form
     form = MoodEntryForm(request.POST or None, instance=mood)
 
-    if form.is_valid() and request.method == "POST":
-        # Save form and return to home page
-        form.save()
-        return HttpResponseRedirect(reverse('main:show_main'))
+    if form.is_valid():
+        user = form.get_user()
+        login(request, user)
+        response = HttpResponseRedirect(reverse("main:show_main"))
+        response.set_cookie('last_login', str(datetime.datetime.now()))
+        return response
+    else:
+        messages.error(request, "Invalid username or password. Please try again.")
 
     context = {'form': form}
     return render(request, "edit_mood.html", context)
